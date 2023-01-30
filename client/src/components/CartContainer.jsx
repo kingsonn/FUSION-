@@ -1,40 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { RiRefreshFill } from "react-icons/ri";
-
+import { emptyCart, selectItems, selectTotal } from "../utils/cartSlice";
 import { motion } from "framer-motion";
 import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
 import EmptyCart from "../img/emptyCart.svg";
 import CartItem from "./CartItem";
+import { useDispatch, useSelector } from "react-redux";
 
 const CartContainer = () => {
-  const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
-  const [flag, setFlag] = useState(1);
-  const [tot, setTot] = useState(0);
+  const items = useSelector(selectItems);
+  const total = useSelector(selectTotal);
+  const dispatcha = useDispatch();
+  const [disabled, setDisabled] = useState(false);
 
+  const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
   const showCart = () => {
     dispatch({
       type: actionType.SET_CART_SHOW,
       cartShow: !cartShow,
     });
-  };
-
-  useEffect(() => {
-    let totalPrice = cartItems.reduce(function (accumulator, item) {
-      return accumulator + item.qty * item.price;
-    }, 0);
-    setTot(totalPrice);
-    console.log(tot);
-  }, [tot, flag]);
-
-  const clearCart = () => {
-    dispatch({
-      type: actionType.SET_CARTITEMS,
-      cartItems: [],
-    });
-
-    localStorage.setItem("cartItems", JSON.stringify([]));
   };
 
   return (
@@ -53,26 +39,33 @@ const CartContainer = () => {
         <motion.p
           whileTap={{ scale: 0.75 }}
           className="flex items-center gap-2 p-1 px-2 my-2 bg-gray-100 rounded-md hover:shadow-md  cursor-pointer text-textColor text-base"
-          onClick={clearCart}
+          onClick={() => dispatcha(emptyCart())}
         >
           Clear <RiRefreshFill />
         </motion.p>
       </div>
 
       {/* bottom section */}
-      {cartItems && cartItems.length > 0 ? (
+      {items && items.length > 0 ? (
         <div className="w-full h-full bg-cartBg rounded-t-[2rem] flex flex-col">
           {/* cart Items section */}
           <div className="w-full h-340 md:h-42 px-6 py-10 flex flex-col gap-3 overflow-y-scroll scrollbar-none">
             {/* cart Item */}
-            {cartItems &&
-              cartItems.length > 0 &&
-              cartItems.map((item) => (
+            {items &&
+              items.length > 0 &&
+              items.map((item,i) => (
                 <CartItem
-                  key={item.id}
+                  key={item._id}
+                  _id={item?._id}
                   item={item}
-                  setFlag={setFlag}
-                  flag={flag}
+                    title={item?.title}
+                    price={item?.price}
+                    description={""}
+                    category={item?.category}
+                    image={item.image}
+                    qty={item?.qty}
+                    border={i !== items?.length - 1}
+                    disabled={disabled}
                 />
               ))}
           </div>
@@ -85,7 +78,7 @@ const CartContainer = () => {
             <div className="w-full flex items-center justify-between">
               <p className="text-gray-200 text-xl font-semibold">Total</p>
               <p className="text-gray-200 text-xl font-semibold">
-              ₹{tot}
+              ₹{total}
               </p>
             </div>
 

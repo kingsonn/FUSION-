@@ -2,32 +2,29 @@ import React, { useEffect, useRef, useState } from "react";
 import { MdShoppingBasket } from "react-icons/md";
 import { motion } from "framer-motion";
 import NotFound from "../img/NotFound.svg";
-import { useStateValue } from "../context/StateProvider";
-import { actionType } from "../context/reducer";
-
+import { useDispatch } from "react-redux";
+import { addToCart } from "../utils/cartSlice";
 const RowContainer = ({ flag, data, scrollValue }) => {
   const rowContainer = useRef();
-
-  const [items, setItems] = useState([]);
-
-  const [{ cartItems }, dispatch] = useStateValue();
-
-  const addtocart = () => {
-    dispatch({
-      type: actionType.SET_CARTITEMS,
-      cartItems: items,
-    });
-    localStorage.setItem("cartItems", JSON.stringify(items));
+  const dispatch = useDispatch();
+  const addItemToCart = (_id, title, price, description, category, image) => {
+    //Sending the Dish as an action to the REDUX store... the cart slice
+    dispatch(
+      addToCart({
+        _id,
+        title,
+        price,
+        description,
+        category,
+        image,
+        qty: 1,
+        toast: true,
+      })
+    );
   };
-
   useEffect(() => {
     rowContainer.current.scrollLeft += scrollValue;
   }, [scrollValue]);
-
-  useEffect(() => {
-    addtocart();
-  }, [items]);
-
   return (
     <div
       ref={rowContainer}
@@ -41,7 +38,7 @@ const RowContainer = ({ flag, data, scrollValue }) => {
         data.map((item) => (
           <div
             key={item?.id}
-            className="w-275 h-[175px] min-w-[275px] md:w-300 md:min-w-[300px]  bg-cardOverlay rounded-lg py-2 px-4  my-12 backdrop-blur-lg hover:drop-shadow-lg flex flex-col items-center justify-evenly relative"
+            className="w-275 h-[175px] min-w-[275px] md:w-300 md:min-w-[300px]  bg-cardOverlay rounded-lg py-2 px-4  backdrop-blur-lg hover:drop-shadow-lg flex flex-col items-center justify-evenly relative"
           >
             <div className="w-full flex items-center justify-between">
               <motion.div
@@ -57,7 +54,7 @@ const RowContainer = ({ flag, data, scrollValue }) => {
               <motion.div
                 whileTap={{ scale: 0.75 }}
                 className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-orange-500 flex items-center justify-center cursor-pointer hover:shadow-md -mt-8"
-                onClick={() => setItems([...cartItems, item])}
+                onClick={() => addItemToCart(item.id, item.title, item.price, "", item.category, item.imageURL)}
               >
                 <MdShoppingBasket className=" text-white" />
               </motion.div>

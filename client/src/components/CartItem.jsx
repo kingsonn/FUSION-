@@ -1,69 +1,109 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { motion } from "framer-motion";
-import { useStateValue } from "../context/StateProvider";
-import { actionType } from "../context/reducer";
-import { fetchCart } from "../utils/fetchLocalStorageData";
-let items = [];
+import { useDispatch } from "react-redux";
+import { updateQty, removeFromCart} from "../utils/cartSlice";
 
-const CartItem = ({ item, setFlag, flag }) => {
-  const [{ cartItems }, dispatch] = useStateValue();
-  const [qty, setQty] = useState(item.qty);
+const CartItem = ({  _id,
+  item,
+  title,
+  price,
+  description,
+  category,
+  image,
+  qty,
+  border,
+  disabled, }) => {
+  const dispatch = useDispatch();
+  const total = price * qty;
+  const removeItemFromCart = () => dispatch(removeFromCart({ _id }));
+  const incQty = () =>{
+  dispatch(
+    updateQty({
+      _id,
+      title,
+      price,
+      description,
+      category,
+      image,
+      qty: qty + 1,
+    })
+  );
+  
+}
 
-  const cartDispatch = () => {
-    localStorage.setItem("cartItems", JSON.stringify(items));
-    dispatch({
-      type: actionType.SET_CARTITEMS,
-      cartItems: items,
-    });
-  };
+const decQty = () =>{
+  dispatch(
+    updateQty({
+      _id,
+      title,
+      price,
+      description,
+      category,
+      image,
+      qty: qty - 1,
+    })
+  );
+}
 
-  const updateQty = (action, id) => {
-    if (action == "add") {
-      setQty(qty + 1);
-      cartItems.map((item) => {
-        if (item.id === id) {
-          item.qty += 1;
-          setFlag(flag + 1);
-        }
-      });
-      cartDispatch();
-    } else {
-      // initial state value is one so you need to check if 1 then remove it
-      if (qty == 1) {
-        items = cartItems.filter((item) => item.id !== id);
-        setFlag(flag + 1);
-        cartDispatch();
-      } else {
-        setQty(qty - 1);
-        cartItems.map((item) => {
-          if (item.id === id) {
-            item.qty -= 1;
-            setFlag(flag + 1);
-          }
-        });
-        cartDispatch();
-      }
-    }
-  };
+  // const [{ cartItems }, dispatch] = useStateValue();
+  // const [qty, setQty] = useState(item.qty);
 
-  useEffect(() => {
-    items = cartItems;
-  }, [qty, items]);
+  // const cartDispatch = () => {
+  //   localStorage.setItem("cartItems", JSON.stringify(items));
+  //   dispatch({
+  //     type: actionType.SET_CARTITEMS,
+  //     cartItems: items,
+  //   });
+  // };
+
+  // const updateQty = (action, id) => {
+  //   if (action == "add") {
+  //     setQty(qty + 1);
+  //     cartItems.map((item) => {
+  //       if (item.id === id) {
+  //         item.qty += 1;
+  //         setFlag(flag + 1);
+  //       }
+  //     });
+  //     cartDispatch();
+  //   } else {
+  //     // initial state value is one so you need to check if 1 then remove it
+  //     if (qty == 1) {
+  //       items = cartItems.filter((item) => item.id !== id);
+  //       setFlag(flag + 1);
+  //       cartDispatch();
+  //     } else {
+  //       setQty(qty - 1);
+  //       cartItems.map((item) => {
+  //         if (item.id === id) {
+  //           item.qty -= 1;
+  //           setFlag(flag + 1);
+  //         }
+  //       });
+  //       cartDispatch();
+  //     }
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   items = cartItems;
+  // }, [qty, items]);
 
   return (
     <div className="w-full p-1 px-2 rounded-lg bg-cartItem flex items-center gap-2">
       <img
-        src={item?.imageURL}
+     
+        src={image}
         className="w-20 h-20 max-w-[60px] rounded-full object-contain"
         alt=""
       />
 
       {/* name section */}
       <div className="flex flex-col gap-2">
-        <p className="text-base text-gray-50">{item?.title}</p>
+        <p className="text-base text-gray-50">{title}</p>
         <p className="text-sm block text-gray-300 font-semibold">
-        ₹ {parseFloat(item?.price) * qty}
+        ₹ {total}
         </p>
       </div>
 
@@ -71,7 +111,7 @@ const CartItem = ({ item, setFlag, flag }) => {
       <div className="group flex items-center gap-2 ml-auto cursor-pointer">
         <motion.div
           whileTap={{ scale: 0.75 }}
-          onClick={() => updateQty("remove", item?.id)}
+          onClick={decQty}
         >
           <BiMinus className="text-gray-50 " />
         </motion.div>
@@ -82,7 +122,7 @@ const CartItem = ({ item, setFlag, flag }) => {
 
         <motion.div
           whileTap={{ scale: 0.75 }}
-          onClick={() => updateQty("add", item?.id)}
+          onClick={incQty}
         >
           <BiPlus className="text-gray-50 " />
         </motion.div>
