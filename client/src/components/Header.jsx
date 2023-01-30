@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { MdShoppingBasket, MdAdd, MdLogout } from "react-icons/md";
 import { motion } from "framer-motion";
-
+import { selectItems } from "../utils/cartSlice";
+import { useSelector } from "react-redux";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { app } from "../firebase.config";
 import Avatar from "../img/avatar.png";
@@ -12,7 +13,8 @@ import { actionType } from "../context/reducer";
 const Header = () => {
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
-
+  const items = useSelector(selectItems);
+  console.log(items.length)
   const [{ user, cartShow, cartItems }, dispatch] = useStateValue();
 
   const [isMenu, setIsMenu] = useState(false);
@@ -83,13 +85,13 @@ const Header = () => {
             onClick={showCart}
           >
             <MdShoppingBasket className="text-textColor text-2xl  cursor-pointer" />
-            {cartItems && cartItems.length > 0 && (
+           
               <div className=" absolute -top-2 -right-2 w-5 h-5 rounded-full bg-gradient-to-br from-orange-400 to-orange-500 flex items-center justify-center">
                 <p className="text-xs text-black font-semibold">
-                  {cartItems.length}
+                  {items?.length}
                 </p>
               </div>
-            )}
+            
           </div>
 
           <div className="relative">
@@ -137,10 +139,10 @@ const Header = () => {
           onClick={showCart}
         >
           <MdShoppingBasket className="text-textColor text-2xl  cursor-pointer" />
-          {cartItems && cartItems.length > 0 && (
+          {items && items.length > 0 && (
             <div className=" absolute -top-2 -right-2 w-5 h-5 rounded-full bg-gradient-to-br from-orange-400 to-orange-500 flex items-center justify-center">
               <p className="text-xs text-black font-semibold">
-                {cartItems.length}
+                {items.length}
               </p>
             </div>
           )}
