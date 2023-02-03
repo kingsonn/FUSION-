@@ -11,7 +11,7 @@ app = Flask(__name__,
 app.config["DEBUG"] = True
 
 # app = Flask(__name__)
-YOUR_DOMAIN = 'http://localhost:4242'
+YOUR_DOMAIN = 'http://localhost:3000'
 @app.route('/create-checkout-session', methods=['POST'])
 @cross_origin()
 def create_checkout_session():
