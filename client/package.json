@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "http://localhost:3000",
-  "proxy": "http://localhost:4242",
+  "proxy": "https://346d-2401-4900-1c97-96f5-fe8a-782d-f572-b000.in.ngrok.io",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.2",
+    "@stripe/stripe-js": "^1.46.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "axios": "^1.3.0",
     "firebase": "^9.6.10",
     "framer-motion": "^6.2.8",
     "react": "^17.0.2",
@@ -18,6 +20,7 @@
     "react-reveal": "^1.2.2",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
+    "stripe": "^11.8.0",
     "tailwind-scrollbar": "^1.3.1",
     "web-vitals": "^2.1.0"
   },
