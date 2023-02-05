@@ -8,6 +8,10 @@ import { actionType } from "../context/reducer";
 import EmptyCart from "../img/emptyCart.svg";
 import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
+import axios from 'axios'
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe('pk_test_51MWG4bSIlus8ySuKYDlTWGGBW8xk6LHYgBRNu8LP9l1WutzVPZF4F86Fs6e1kbbmDNBs5avspCzo7ffJy929fi4f00NpPatsfC');
 
 const CartContainer = () => {
   const items = useSelector(selectItems);
@@ -16,6 +20,7 @@ const CartContainer = () => {
   const [disabled, setDisabled] = useState(false);
 
   const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
+  // console.log(user.email)
   const showCart = () => {
     dispatch({
       type: actionType.SET_CART_SHOW,
@@ -23,6 +28,29 @@ const CartContainer = () => {
     });
   };
 
+
+const createCheckoutSession = async () => {
+  setDisabled(true);
+  try {
+    const stripe = await stripePromise;
+    const checkoutSession = await axios.post("https://346d-2401-4900-1c97-96f5-fe8a-782d-f572-b000.in.ngrok.io/create-checkout-session", {
+      items: items,
+      email: user.email
+    });
+    const result = await stripe.redirectToCheckout({
+      sessionId: checkoutSession.data.id,
+    });
+    if (result.error) {
+      alert(result.error.message);
+      console.error(result.error.message);
+    }
+    console.log(checkoutSession.data.id)
+  } catch (err) {
+    console.error(err);
+    alert(err);
+  }
+  setDisabled(false);
+};
   return (
     <motion.div
       initial={{ opacity: 0, x: 200 }}
@@ -70,7 +98,7 @@ const CartContainer = () => {
               ))}
           </div>
 
-          {/* cart total section */}
+
           <div className="w-full flex-1 bg-cartTotal rounded-t-[2rem] flex flex-col items-center justify-evenly px-8 py-2">
 
             <div className="w-full border-b border-gray-600 my-2"></div>
@@ -86,6 +114,7 @@ const CartContainer = () => {
               <motion.button
                 whileTap={{ scale: 0.8 }}
                 type="button"
+                onClick={createCheckoutSession}
                 className="w-full p-2 rounded-full bg-gradient-to-tr from-orange-400 to-orange-600 text-gray-50 text-lg my-2 hover:shadow-lg"
               >
                 Check Out
