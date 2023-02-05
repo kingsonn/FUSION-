@@ -20,6 +20,7 @@ const CartContainer = () => {
   const [disabled, setDisabled] = useState(false);
 
   const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
+  // console.log(user.email)
   const showCart = () => {
     dispatch({
       type: actionType.SET_CART_SHOW,
@@ -33,6 +34,7 @@ const createCheckoutSession = async () => {
     const stripe = await stripePromise;
     const checkoutSession = await axios.post("/create-checkout-session", {
       items: items,
+      email: user.email
     });
     const result = await stripe.redirectToCheckout({
       sessionId: checkoutSession.data.id,
