@@ -1,3 +1,4 @@
+import datetime
 from flask import Flask, redirect, request, jsonify
 from flask_cors import cross_origin
 import stripe
@@ -21,7 +22,19 @@ YOUR_DOMAIN = 'http://localhost:3000'
 def create_checkout_session():
     items=request.json['items']
     user= request.json['email']
-    print(user)
+    # result= db.collection(u'temp').add({
+    #     u'name': user,
+    # u'state': u'CA',
+    # u'country': u'USA'
+    # })
+    d = {
+    u'email': user,
+    u'items': items,
+    u'timestamp': firestore.SERVER_TIMESTAMP,
+
+}
+    update_time, temp_ref = db.collection(u'temp').add(d)
+    print(f'Added document with id {temp_ref.id}')
     transformed_items = [{    
     # "description": item["description"],
     'price_data': {
@@ -39,6 +52,9 @@ def create_checkout_session():
             mode='payment',
             success_url=YOUR_DOMAIN + '?success=true',
             cancel_url=YOUR_DOMAIN + '?canceled=true',
+        metadata={
+        "id": temp_ref.id,
+    }
         )
     except Exception as e:
         return str(e)
@@ -47,7 +63,7 @@ def create_checkout_session():
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    print("heeee")
+
     event = None
     payload = request.data
     sig_header = request.headers['STRIPE_SIGNATURE']
@@ -66,7 +82,20 @@ def webhook():
     # Handle the event
     if event['type'] == 'checkout.session.completed':
       session = event['data']['object']
-      print(session)
+      print(session.metadata.id)
+      doc_ref = db.collection(u'temp').document(session.metadata.id)
+      doc = doc_ref.get()
+      print(doc.to_dict()['email'])
+      order_status={
+        u'status': u'Order Placed',
+        u'timestamp': firestore.SERVER_TIMESTAMP,
+      }
+      data={
+        u'email': doc.to_dict()['email'],
+        u'items': doc.to_dict()['items'],
+        u'order_status': order_status,
+      }
+      db.collection(u'orders').add(data)
 
     # ... handle other event types
     else:
