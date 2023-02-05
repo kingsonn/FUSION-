@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "http://localhost:3000",
-  "proxy": "http://localhost:4242",
+  "proxy": "https://346d-2401-4900-1c97-96f5-fe8a-782d-f572-b000.in.ngrok.io",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.2",
     "@stripe/stripe-js": "^1.46.0",
