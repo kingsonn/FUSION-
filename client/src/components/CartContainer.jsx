@@ -10,6 +10,7 @@ import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios'
 import { loadStripe } from "@stripe/stripe-js";
+import NormalToast from "../utils/Toast/NormalToast";
 
 const stripePromise = loadStripe('pk_test_51MWG4bSIlus8ySuKYDlTWGGBW8xk6LHYgBRNu8LP9l1WutzVPZF4F86Fs6e1kbbmDNBs5avspCzo7ffJy929fi4f00NpPatsfC');
 
@@ -18,7 +19,7 @@ const CartContainer = () => {
   const total = useSelector(selectTotal);
   const dispatcha = useDispatch();
   const [disabled, setDisabled] = useState(false);
-
+  const [time, setTime] = useState("");
   const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
   // console.log(user.email)
   const showCart = () => {
@@ -31,11 +32,19 @@ const CartContainer = () => {
 
 const createCheckoutSession = async () => {
   setDisabled(true);
+  const today= new Date()
+  const currentTime= today.getHours() + ':' + parseInt(today.getMinutes() +30)
+  const startTime = "09:00";
+  const endTime = "18:00";
+  console.log(time==""||(currentTime<time && time>=startTime && time<=endTime))
+  const a= 1
+  if(time==""||(currentTime<time && time>=startTime && time<=endTime)){
   try {
     const stripe = await stripePromise;
     const checkoutSession = await axios.post("https://346d-2401-4900-1c97-96f5-fe8a-782d-f572-b000.in.ngrok.io/create-checkout-session", {
       items: items,
-      email: user.email
+      email: user.email,
+      time: time,
     });
     const result = await stripe.redirectToCheckout({
       sessionId: checkoutSession.data.id,
@@ -50,6 +59,15 @@ const createCheckoutSession = async () => {
     alert(err);
   }
   setDisabled(false);
+}
+else{
+ NormalToast("Select approprite order time or cancel for immediate order", true)
+ setDisabled(false)
+};
+}
+
+const handleChange = (event) => {
+  setTime(event.target.value);
 };
   return (
     <motion.div
@@ -100,7 +118,21 @@ const createCheckoutSession = async () => {
 
 
           <div className="w-full flex-1 bg-cartTotal rounded-t-[2rem] flex flex-col items-center justify-evenly px-8 py-2">
-
+                {user? (
+                    <div className="flex py-full px-full">
+                    <label htmlFor="time-input" className=" text-white font-m mr-2">
+                      Select time:
+                    </label>
+                    <input
+                      type="time"
+                      id="time-input"
+                      value={time}
+                      onChange={handleChange}
+                      className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:border-gray-500"
+                    />
+                    <motion.button whileTap={{ scale: 0.75 }} className=" ml-1.5 text-white" onClick={()=>setTime("")}>Cancel</motion.button>
+                  </div>
+                ):()=>{}}
             <div className="w-full border-b border-gray-600 my-2"></div>
 
             <div className="w-full flex items-center justify-between">
@@ -111,12 +143,15 @@ const createCheckoutSession = async () => {
             </div>
 
             {user ? (
+              
               <motion.button
                 whileTap={{ scale: 0.8 }}
                 type="button"
                 onClick={createCheckoutSession}
-                className="w-full p-2 rounded-full bg-gradient-to-tr from-orange-400 to-orange-600 text-gray-50 text-lg my-2 hover:shadow-lg"
+                
+                className={`${!disabled?"w-full p-2 rounded-full bg-gradient-to-tr from-orange-400 to-orange-600 text-gray-50 text-lg my-2 hover:shadow-lg": "w-full p-2 rounded-full bg-gradient-to-tr from-orange-400 to-orange-600 opacity-40 text-gray-50 text-lg my-2 hover:shadow-lg"}`}
               >
+                
                 Check Out
               </motion.button>
             ) : (

@@ -10,7 +10,7 @@ const addedToCartToast = (image, title) => {
           width={40}
           height={40}
           alt=""
-          objectFit="cover"
+          objectfit="cover"
           className="min-w-auto w-40 cover "
         />
       </div>
@@ -20,10 +20,6 @@ const addedToCartToast = (image, title) => {
           {title.slice(0, 22)}
           {title.length > 22 ? "…" : ""}
         </p>
-        
-          {/* <button className="px-8 py-2 w-full flex items-center bg-gradient-to-br from-orange-400 to-orange-500 rounded-lg justify-center button">
-             Checkout
-          </button> */}
       
       </div>
     </div>,
@@ -36,6 +32,7 @@ const addedToCartToast = (image, title) => {
         color: "#1f2937",
         fontFamily: "Poppins, sans-serif",
         height: "auto",
+      
       },
       hideProgressBar: false,
       pauseOnHover: false,

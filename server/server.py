@@ -1,4 +1,3 @@
-import datetime
 from flask import Flask, redirect, request, jsonify
 from flask_cors import cross_origin
 import stripe
@@ -22,21 +21,17 @@ YOUR_DOMAIN = 'http://localhost:3000'
 def create_checkout_session():
     items=request.json['items']
     user= request.json['email']
-    # result= db.collection(u'temp').add({
-    #     u'name': user,
-    # u'state': u'CA',
-    # u'country': u'USA'
-    # })
+    time= request.json['time']
     d = {
     u'email': user,
     u'items': items,
+    u'time': time,
     u'timestamp': firestore.SERVER_TIMESTAMP,
 
 }
     update_time, temp_ref = db.collection(u'temp').add(d)
     print(f'Added document with id {temp_ref.id}')
     transformed_items = [{    
-    # "description": item["description"],
     'price_data': {
         'currency': 'inr',
         'product_data': {
@@ -58,7 +53,7 @@ def create_checkout_session():
         )
     except Exception as e:
         return str(e)
-    # print(checkout_session)
+
     return (checkout_session)
 
 @app.route('/webhook', methods=['POST'])
@@ -73,10 +68,8 @@ def webhook():
             payload, sig_header, endpoint_secret
         )
     except ValueError as e:
-        # Invalid payload
         raise e
     except stripe.error.SignatureVerificationError as e:
-        # Invalid signature
         raise e
 
     # Handle the event
@@ -93,11 +86,11 @@ def webhook():
       data={
         u'email': doc.to_dict()['email'],
         u'items': doc.to_dict()['items'],
+        u'time': doc.to_dict()['time'],
         u'order_status': order_status,
       }
       db.collection(u'orders').add(data)
 
-    # ... handle other event types
     else:
       print('Unhandled event type {}'.format(event['type']))
 
