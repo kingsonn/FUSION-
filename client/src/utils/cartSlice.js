@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import addedToCartToast from "../util/Toast/addedToCartToast";
+import addedToCartToast from "./Toast/addedToCartToast";
 
 const initialState = {
   items: [],
@@ -30,10 +30,10 @@ export const cartSlice = createSlice({
         delete item.toast;
         state.items = [...state.items, item];
       }
-      //Toast to indicate item added to cart
-      // if (action.payload.toast) {
-      //   addedToCartToast(action.payload.image, action.payload.title);
-      // }
+      // Toast to indicate item added to cart
+      if (action.payload.toast) {
+        addedToCartToast(action.payload.image, action.payload.title);
+      }
     },
     //Update the quantity of item in cart
     updateQty: (state, action) => {

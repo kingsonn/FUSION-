@@ -10,6 +10,8 @@ import {store} from "./utils/store";
 import StorageService from "./utils/StorageService";
 import { hydrate} from "./utils/cartSlice"
 import Footer from "./components/Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [{ foodItems }, dispatch] = useStateValue();
@@ -36,6 +38,8 @@ const App = () => {
 
   return (
     <AnimatePresence exitBeforeEnter>
+            <ToastContainer limit={4} />
+
       <div className="w-screen h-auto flex flex-col bg-primary">
         <Header />
 
