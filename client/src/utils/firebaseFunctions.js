@@ -5,6 +5,7 @@ import {
   orderBy,
   query,
   setDoc,
+  where,
 } from "firebase/firestore";
 import { firestore } from "../firebase.config";
 
@@ -20,7 +21,13 @@ export const getAllFoodItems = async () => {
   const items = await getDocs(
     query(collection(firestore, "foodItems"), orderBy("id", "desc"))
   );
-  console.log(items.docs._document)
+
+  return items.docs.map((doc) => doc.data());
+};
+export const getOrders = async (user) => {
+  const items = await getDocs(
+    query(collection(firestore, "orders"), where("email", "==", user))
+  );
 
   return items.docs.map((doc) => doc.data());
 };

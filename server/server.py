@@ -75,10 +75,9 @@ def webhook():
     # Handle the event
     if event['type'] == 'checkout.session.completed':
       session = event['data']['object']
-      print(session.metadata.id)
+    #   print(session)
       doc_ref = db.collection(u'temp').document(session.metadata.id)
       doc = doc_ref.get()
-      print(doc.to_dict()['email'])
       order_status={
         u'status': u'Order Placed',
         u'timestamp': firestore.SERVER_TIMESTAMP,
@@ -88,6 +87,8 @@ def webhook():
         u'items': doc.to_dict()['items'],
         u'time': doc.to_dict()['time'],
         u'order_status': order_status,
+        u'order_ID': session.id,
+        u'total': session.amount_subtotal,
       }
       db.collection(u'orders').add(data)
 

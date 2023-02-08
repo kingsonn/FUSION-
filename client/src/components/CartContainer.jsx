@@ -121,7 +121,7 @@ const handleChange = (event) => {
                 {user? (
                     <div className="flex py-full px-full">
                     <label htmlFor="time-input" className=" text-white font-m mr-2">
-                      Select<br/>time:
+                      Select <br/> time:
                     </label>
                     <input
                       type="time"
