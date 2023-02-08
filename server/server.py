@@ -15,7 +15,7 @@ fstore = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 # app = Flask(__name__)
-YOUR_DOMAIN = 'http://localhost:3000'
+YOUR_DOMAIN = 'http://quickteen-v1.vercel.app'
 @app.route('/create-checkout-session', methods=['POST'])
 @cross_origin()
 def create_checkout_session():
@@ -45,8 +45,8 @@ def create_checkout_session():
         checkout_session = stripe.checkout.Session.create(
         line_items=transformed_items,
             mode='payment',
-            success_url=YOUR_DOMAIN + '?success=true',
-            cancel_url=YOUR_DOMAIN + '?canceled=true',
+            success_url=YOUR_DOMAIN + '/success',
+            cancel_url=YOUR_DOMAIN + '/',
         metadata={
         "id": temp_ref.id,
     }

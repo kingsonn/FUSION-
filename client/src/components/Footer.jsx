@@ -13,7 +13,7 @@ function Footer() {
       );
     };
     return (
-      <div className="bg-gradient-to-br from-orange-400 to-orange-500 py-8 px-6 text-black  lg:text-base text-sm">
+      <div className="relative bottom-auto bg-gradient-to-br from-orange-400 to-orange-500 py-8 px-6 text-black  lg:text-base text-sm">
         <div className="max-w-screen-xl w-full mx-auto">
           <div className="flex justify-between items-center">
             <div  className="flex items-center lg:space-x-8 space-x-4" >
