@@ -41,7 +41,7 @@ const createCheckoutSession = async () => {
   if(time==""||(currentTime<time && time>=startTime && time<=endTime)){
   try {
     const stripe = await stripePromise;
-    const checkoutSession = await axios.post("https://346d-2401-4900-1c97-96f5-fe8a-782d-f572-b000.in.ngrok.io/create-checkout-session", {
+    const checkoutSession = await axios.post("https://1189-2401-4900-1c97-a8b8-6d81-5152-5849-82f5.in.ngrok.io/create-checkout-session", {
       items: items,
       email: user.email,
       time: time,
