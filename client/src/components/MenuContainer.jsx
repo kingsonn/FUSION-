@@ -6,7 +6,7 @@ import RowContainer from "./RowContainer";
 import { useStateValue } from "../context/StateProvider";
 
 const MenuContainer = () => {
-  const [filter, setFilter] = useState("chicken");
+  const [filter, setFilter] = useState("Sandwiches");
 
   const [{ foodItems }, dispatch] = useStateValue();
 
@@ -26,18 +26,18 @@ const MenuContainer = () => {
                 className={`group ${
                   filter === category.urlParamName ? "bg-gradient-to-br from-orange-400 to-orange-500" : "bg-card"
                 } w-24 min-w-[154px] h-28 cursor-pointer rounded-lg drop-shadow-xl flex flex-col gap-3 items-center justify-center hover:bg-gradient-to-br from-orange-400 to-orange-500 `}
-                onClick={() => setFilter(category.urlParamName)}
+                onClick={() => setFilter(category.name)}
               >
                 <div
                   className={`w-10 h-10 rounded-full shadow-lg ${
-                    filter === category.urlParamName
+                    filter === category.name
                       ? "bg-white"
                       : "bg-gradient-to-br from-orange-400 to-orange-500"
                   } group-hover:bg-white flex items-center justify-center`}
                 >
                   <IoFastFood
                     className={`${
-                      filter === category.urlParamName
+                      filter === category.name
                         ? "text-textColor"
                         : "text-white"
                     } group-hover:text-textColor text-lg`}
@@ -45,7 +45,7 @@ const MenuContainer = () => {
                 </div>
                 <p
                   className={`text-sm ${
-                    filter === category.urlParamName
+                    filter === category.name
                       ? "text-white"
                       : "text-textColor"
                   } group-hover:text-white`}
@@ -59,7 +59,7 @@ const MenuContainer = () => {
         <div className="w-full">
           <RowContainer
             flag={false}
-            data={foodItems?.filter((n) => n.category == filter)}
+            data={foodItems?.filter((n) => n.Category == filter)}
           />
         </div>
       </div>

@@ -5,21 +5,20 @@ import {
   orderBy,
   query,
   setDoc,
+  addDoc,
   where,
 } from "firebase/firestore";
 import { firestore } from "../firebase.config";
 
 // Saving new Item
 export const saveItem = async (data) => {
-  await setDoc(doc(firestore, "foodItems", `${Date.now()}`), data, {
-    merge: true,
-  });
+  await addDoc(collection(firestore, "foodItems"), data);
 };
 
 // getall food items
 export const getAllFoodItems = async () => {
   const items = await getDocs(
-    query(collection(firestore, "foodItems"), orderBy("id", "desc"))
+    query(collection(firestore, "foodItems"), orderBy("Item_id", "desc"))
   );
 
   return items.docs.map((doc) => doc.data());

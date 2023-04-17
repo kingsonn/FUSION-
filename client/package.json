@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "http://localhost:3000",
-  "proxy": "https://1189-2401-4900-1c97-a8b8-6d81-5152-5849-82f5.in.ngrok.io",
+  "proxy": "https://66e0-2401-4900-56db-fec0-583c-b15d-2f7c-4567.ngrok-free.app",
   "dependencies": {
     "@heroicons/react": "v1",
     "@reduxjs/toolkit": "^1.9.2",

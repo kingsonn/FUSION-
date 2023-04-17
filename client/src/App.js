@@ -12,17 +12,20 @@ import { hydrate} from "./utils/cartSlice"
 import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Admin from "./components/Admin";
 
 const App = () => {
   const [{ foodItems }, dispatch] = useStateValue();
 
   const fetchData = async () => {
+    console.log("heell")
     await getAllFoodItems().then((data) => {
       dispatch({
         type: actionType.SET_FOOD_ITEMS,
         foodItems: data,
       });
     });
+    // console.log(foodItems)
   };
   useEffect(() => {
     store.subscribe(() => {
@@ -39,7 +42,7 @@ const App = () => {
   return (
     <AnimatePresence exitBeforeEnter>
             <ToastContainer limit={4} />
-
+    
       <div className="w-screen h-auto flex flex-col bg-primary">
         <Header />
 

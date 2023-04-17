@@ -16,7 +16,7 @@ export const cartSlice = createSlice({
     //Add item to cart
     addToCart: (state, action) => {
       const index = state.items.findIndex(
-        (cartItem) => cartItem._id === action.payload._id
+        (cartItem) => cartItem.Item_id === action.payload.Item_id
       );
       if (index >= 0) {
         let newCart = [...state.items];
@@ -32,14 +32,14 @@ export const cartSlice = createSlice({
       }
       // Toast to indicate item added to cart
       if (action.payload.toast) {
-        addedToCartToast(action.payload.image, action.payload.title);
+        addedToCartToast(action.payload.Image, action.payload.Item_name);
       }
     },
     //Update the quantity of item in cart
     updateQty: (state, action) => {
       let newCart = [...state.items];
       const index = state.items.findIndex(
-        (cartItem) => cartItem._id === action.payload._id
+        (cartItem) => cartItem.Item_id === action.payload.Item_id
       );
       if (index >= 0) {
         if (action.payload.qty >= 1) {
@@ -56,14 +56,14 @@ export const cartSlice = createSlice({
     //Remove a item from cart
     removeFromCart: (state, action) => {
       const index = state.items.findIndex(
-        (cartItem) => cartItem._id === action.payload._id
+        (cartItem) => cartItem.Item_id === action.payload.Item_id
       );
       let newBastek = [...state.items];
       if (index >= 0) {
         newBastek.splice(index, 1);
       } else {
         console.warn(
-          `Can't remove dish (_id:${action.payload._id}) as its not in the cart`
+          `Can't remove dish (_id:${action.payload.Item_id}) as its not in the cart`
         );
       }
       state.items = newBastek;
@@ -81,6 +81,6 @@ export const { addToCart, removeFromCart, updateQty, hydrate, emptyCart } =
 // Selectors - This is how we pull information from the Global store slice
 export const selectItems = (state) => state.cart.items;
 export const selectTotal = (state) =>
-  state.cart.items.reduce((total, item) => total + item.price * item.qty, 0);
+  state.cart.items.reduce((total, item) => total + item.Price * item.qty, 0);
 
 export default cartSlice.reducer;

@@ -41,7 +41,8 @@ const createCheckoutSession = async () => {
   if(time==""||(currentTime<time && time>=startTime && time<=endTime)){
   try {
     const stripe = await stripePromise;
-    const checkoutSession = await axios.post("https://1189-2401-4900-1c97-a8b8-6d81-5152-5849-82f5.in.ngrok.io/create-checkout-session", {
+    console.log(items)
+    const checkoutSession = await axios.post("https://66e0-2401-4900-56db-fec0-583c-b15d-2f7c-4567.ngrok-free.app/create-checkout-session", {
       items: items,
       email: user.email,
       time: time,
@@ -101,14 +102,14 @@ const handleChange = (event) => {
               items.length > 0 &&
               items.map((item,i) => (
                 <CartItem
-                  key={item._id}
-                  _id={item?._id}
+                  key={item.Item_id}
+                  Item_id={item?.Item_id}
                   item={item}
-                    title={item?.title}
-                    price={item?.price}
-                    description={""}
-                    category={item?.category}
-                    image={item.image}
+                    Item_name={item?.Item_name}
+                    Price={item?.Price}
+                    Description={item?.Description}
+                    Category={item?.Category}
+                    Image={item.Image}
                     qty={item?.qty}
                     border={i !== items?.length - 1}
                     disabled={disabled}

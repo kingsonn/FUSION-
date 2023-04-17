@@ -4,28 +4,28 @@ import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { updateQty, removeFromCart} from "../utils/cartSlice";
 
-const CartItem = ({  _id,
+const CartItem = ({  Item_id,
   item,
-  title,
-  price,
-  description,
-  category,
-  image,
+  Item_name,
+  Price,
+  Description,
+  Category,
+  Image,
   qty,
   border,
   disabled, }) => {
   const dispatch = useDispatch();
-  const total = price * qty;
-  const removeItemFromCart = () => dispatch(removeFromCart({ _id }));
+  const total = Price * qty;
+  const removeItemFromCart = () => dispatch(removeFromCart({ Item_id }));
   const incQty = () =>{
   dispatch(
     updateQty({
-      _id,
-      title,
-      price,
-      description,
-      category,
-      image,
+      Item_id,
+      Item_name,
+      Price,
+      Description,
+      Category,
+      Image,
       qty: qty + 1,
     })
   );
@@ -35,12 +35,12 @@ const CartItem = ({  _id,
 const decQty = () =>{
   dispatch(
     updateQty({
-      _id,
-      title,
-      price,
-      description,
-      category,
-      image,
+      Item_id,
+      Item_name,
+      Price,
+      Description,
+      Category,
+      Image,
       qty: qty - 1,
     })
   );
@@ -50,14 +50,14 @@ const decQty = () =>{
     <div className="w-full p-1 px-2 rounded-lg bg-cartItem flex items-center gap-2">
       <img
      
-        src={image}
+        src={Image}
         className="w-20 h-20 max-w-[60px] rounded-full object-contain"
         alt=""
       />
 
       {/* name section */}
       <div className="flex flex-col gap-2">
-        <p className="text-base text-gray-50">{title}</p>
+        <p className="text-base text-gray-50">{Item_name}</p>
         <p className="text-sm block text-gray-300 font-semibold">
         ₹ {total}
         </p>

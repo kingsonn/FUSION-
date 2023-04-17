@@ -38,37 +38,42 @@ export const categories = [
   {
     id: 1,
     name: "Sandwiches",
-    urlParamName: "sandwich",
+    urlParamName: "Sandwiches",
   },
   {
     id: 2,
     name: "South Indian",
-    urlParamName: "southindian",
+    urlParamName: "South Indian",
   },
   {
     id: 3,
-    name: "All day snacks",
-    urlParamName: "alldaysnacks",
+    name: "All Day Snacks",
+    urlParamName: "All Day Snacks",
   },
   {
     id: 4,
     name: "Meals",
-    urlParamName: "meals",
+    urlParamName: "Meals",
   },
   {
     id: 5,
-    name: "Chaat",
-    urlParamName: "chaat",
+    name: "Chaat Counter",
+    urlParamName: "Chaat Counter",
   },
   {
     id: 6,
     name: "Beverages",
-    urlParamName: "beverages",
+    urlParamName: "Beverages ",
   },
 
   {
     id: 7,
-    name: "Egg",
-    urlParamName: "egg",
+    name: "Egg Counter",
+    urlParamName: "Egg Counter",
+  },
+  {
+    id: 8,
+    name: "Pizza & Pastas",
+    urlParamName: "Pizza & Pastas",
   },
 ];

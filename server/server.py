@@ -35,9 +35,9 @@ def create_checkout_session():
     'price_data': {
         'currency': 'inr',
         'product_data': {
-            'name': item["title"],
+            'name': item["Item_name"],
             },
-        'unit_amount': int(item["price"]) * 100,
+        'unit_amount': int(item["Price"]) * 100,
     },
     'quantity': item["qty"],
     } for item in items]
