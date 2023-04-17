@@ -13,6 +13,7 @@ import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Admin from "./components/Admin";
+import Mood from "./components/Mood";
 
 const App = () => {
   const [{ foodItems }, dispatch] = useStateValue();
@@ -52,6 +53,7 @@ const App = () => {
             <Route path="/orders" element={<Orders/>}/> 
             <Route path="/success" element={<Success/>}/> 
             <Route path="/createItem" element={<CreateContainer />} />
+            <Route path="/mood" element={<Mood/>} />
           </Routes>
         </main>
       </div>

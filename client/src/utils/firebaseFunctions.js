@@ -23,6 +23,34 @@ export const getAllFoodItems = async () => {
 
   return items.docs.map((doc) => doc.data());
 };
+export const getNeutralFoodItems = async () => {
+  const items = await getDocs(
+    query(collection(firestore, "foodItems"),  where("Mood", "==", "Neutral"))
+  );
+
+  return items.docs.map((doc) => doc.data());
+};
+export const getHappyFoodItems = async () => {
+  const items = await getDocs(
+    query(collection(firestore, "foodItems"),  where("Mood", "==", "Happy"))
+  );
+
+  return items.docs.map((doc) => doc.data());
+};
+export const getSadFoodItems = async () => {
+  const items = await getDocs(
+    query(collection(firestore, "foodItems"),  where("Mood", "==", "Sad"))
+  );
+
+  return items.docs.map((doc) => doc.data());
+};
+export const getSusFoodItems = async () => {
+  const items = await getDocs(
+    query(collection(firestore, "foodItems"),  where("Mood", "==", "Sus"))
+  );
+
+  return items.docs.map((doc) => doc.data());
+};
 export const getOrders = async (user) => {
   const items = await getDocs(
     query(collection(firestore, "orders"), where("email", "==", user))
