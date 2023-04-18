@@ -11,7 +11,7 @@ const Spinner = () => {
         justifyContent: "center",
       }}
     >
-      <FontAwesomeIcon icon="spinner" spin size="lg" />
+      <FontAwesomeIcon icon="spinner" spin size="2xl" />
     </div>
   );
 };

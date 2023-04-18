@@ -51,6 +51,13 @@ export const getSusFoodItems = async () => {
 
   return items.docs.map((doc) => doc.data());
 };
+export const getPopularFoodItems = async (name) => {
+  const items = await getDocs(
+    query(collection(firestore, "foodItems"),  where("Item_name", "==", name))
+  );
+
+  return items.docs.map((doc) => doc.data());
+};
 export const getOrders = async (user) => {
   const items = await getDocs(
     query(collection(firestore, "orders"), where("email", "==", user))

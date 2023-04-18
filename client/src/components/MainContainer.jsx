@@ -6,12 +6,30 @@ import RowContainer from "./RowContainer";
 import { useStateValue } from "../context/StateProvider";
 import MenuContainer from "./MenuContainer";
 import CartContainer from "./CartContainer";
+import axios from "axios";
+import Spinner from "./Spinner/Spinner";
+import { getPopularFoodItems } from "../utils/firebaseFunctions";
 const MainContainer = () => {
   const [{ foodItems, cartShow }, dispatch] = useStateValue();
   const [scrollValue, setScrollValue] = useState(0);
+  const [hehe, sethehe] = useState();
+  let items= []
 
   useEffect(() => {}, [scrollValue, cartShow]);
-
+  const fetchData = async () => {
+    const popular_df = await axios.post("https://66e0-2401-4900-56db-fec0-583c-b15d-2f7c-4567.ngrok-free.app/getpopular")
+    console.log(popular_df.data)
+    for(let i=0; i< popular_df.data.length;i++){
+      await getPopularFoodItems(popular_df.data[i]).then((data) => {
+     items.push(data[0])
+   });
+    }
+    sethehe(items)
+   };
+  ;
+useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <div className="w-full h-auto flex flex-col items-center justify-center ">
 
@@ -40,11 +58,30 @@ const MainContainer = () => {
             </motion.div>
           </div>
         </div>
-        <RowContainer
+        {hehe? (
+          <RowContainer
           scrollValue={scrollValue}
           flag={true}
-          data={foodItems?.filter((n) => n.Category === "Sandwiches")}
+          data={hehe}
         />
+        ):(<>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <Spinner/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        </>)
+        
+      }
+        
       </section>
 
       <MenuContainer />
