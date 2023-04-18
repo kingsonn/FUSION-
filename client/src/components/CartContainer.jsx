@@ -33,9 +33,9 @@ const CartContainer = () => {
 const createCheckoutSession = async () => {
   setDisabled(true);
   const today= new Date()
-  const currentTime= today.getHours() + ':' + parseInt(today.getMinutes() +30)
-  const startTime = "09:00";
-  const endTime = "18:00";
+  const currentTime= today.getHours() + ':' + parseInt(today.getMinutes() +10)
+  const startTime = "08:00";
+  const endTime = "17:00";
   console.log(time==""||(currentTime<time && time>=startTime && time<=endTime))
   const a= 1
   if(time==""||(currentTime<time && time>=startTime && time<=endTime)){
@@ -62,7 +62,7 @@ const createCheckoutSession = async () => {
   setDisabled(false);
 }
 else{
- NormalToast("Select approprite order time or cancel for immediate order", true)
+ NormalToast("Select approprite order time or cancel for immediate order. College Timings: 8AM-5PM", true)
  setDisabled(false)
 };
 }

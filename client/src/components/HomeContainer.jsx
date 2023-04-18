@@ -7,7 +7,7 @@ const HomeContainer = () => {
       className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full "
       id="home"
     >
-      <div className="py-1 flex-1 flex flex-col items-start justify-center gap-6">
+      <div className="py-0 flex-1 flex flex-col items-start justify-center gap-2">
       <div style={{zIndex:-0}} className="absolute lg:-bottom-60 -bottom-72 lg:-left-44 -left-80  object-contain overflow-hidden">
         <Fade left>
         <img src={circle} alt="" width={400} height={400} />
@@ -29,10 +29,7 @@ const HomeContainer = () => {
         </div>
 
         <p className="text-base text-textColor text-center md:text-left md:w-[80%]">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima velit
-          eaque fugit distinctio est nam voluptatum architecto, porro iusto
-          deserunt recusandae ipsa minus eos sunt, dolores illo repellat facere
-          suscipit!
+        Welcome to our online food canteen! With our user-friendly interface, you can easily browse through the college menu, customize your order, and have it ready for pickup at your convenience. Place your order now and treat yourself to the college's  food without leaving the comfort of your own class!
         </p>
 
         <button
