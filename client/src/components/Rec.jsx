@@ -9,9 +9,8 @@ import CartContainer from "./CartContainer";
 import axios from "axios";
 import Spinner from "./Spinner/Spinner";
 import { getOrders } from "../utils/firebaseFunctions";
-import Rec from "./Rec";
 import { getPopularFoodItems } from "../utils/firebaseFunctions";
-const MainContainer = () => {
+const Rec = () => {
   const [{ foodItems, cartShow }, dispatch] = useStateValue();
   const [scrollValue, setScrollValue] = useState(0);
   const [{user}] = useStateValue();
@@ -22,7 +21,17 @@ const MainContainer = () => {
   let rec =[]
   useEffect(() => {}, [scrollValue, cartShow]);
   const fetchData = async () => {
-    const popular_df = await axios.post("https://66e0-2401-4900-56db-fec0-583c-b15d-2f7c-4567.ngrok-free.app/getpopular")
+    const bang =await getOrders(user.email).then((data) => {
+            //   console.log(data)
+              return data
+         });
+        if(bang.length>0){
+            setyolo(1)
+        }
+      
+    const popular_df = await axios.post("https://66e0-2401-4900-56db-fec0-583c-b15d-2f7c-4567.ngrok-free.app/recommend",{
+        yo: bang[0].items[0].Item_name
+    })
     for(let i=0; i< popular_df.data.length;i++){
       await getPopularFoodItems(popular_df.data[i]).then((data) => {
      items.push(data[0])
@@ -64,14 +73,12 @@ useEffect(() => {
 
 
   return (
-    <div className="w-full h-auto flex flex-col items-center justify-center ">
-
-      <HomeContainer />
-
+    <>
+{yolo?(
       <section className="w-full my-6">
         <div className="w-full flex items-center justify-between">
           <p className="text-2xl font-bold capitalize text-headingColor relative before:absolute before:rounded-lg before:content before:w-32 before:h-1 before:-bottom-2 before:left-0 before:bg-gradient-to-tr from-orange-400 to-orange-600 transition-all ease-in-out duration-100">
-            Most Popular
+           Recommended for you!
           </p>
 
           <div className="hidden md:flex gap-3 items-center">
@@ -91,6 +98,7 @@ useEffect(() => {
             </motion.div>
           </div>
         </div>
+
         {hehe? (
           <RowContainer
           scrollValue={scrollValue}
@@ -106,6 +114,7 @@ useEffect(() => {
         <br/>
         <Spinner/>
         <br/>
+        <p className="text-base text-textColor text-center md:text-left md:w-[80%]">Generating recommendations for you</p>
         <br/>
         <br/>
         <br/>
@@ -116,14 +125,9 @@ useEffect(() => {
       }
         
       </section>
-    <Rec/>
-
-      <MenuContainer />
-
-      {cartShow && <CartContainer />}
-
-    </div>
+):(<></>)}
+</>
   );
 };
 
-export default MainContainer;
+export default Rec;

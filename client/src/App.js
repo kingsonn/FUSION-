@@ -19,7 +19,7 @@ const App = () => {
   const [{ foodItems }, dispatch] = useStateValue();
 
   const fetchData = async () => {
-    console.log("heell")
+    // console.log("heell")
     await getAllFoodItems().then((data) => {
       dispatch({
         type: actionType.SET_FOOD_ITEMS,

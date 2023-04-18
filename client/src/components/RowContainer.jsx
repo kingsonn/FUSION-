@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import NotFound from "../img/NotFound.svg";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../utils/cartSlice";
+import Spinner from "./Spinner/Spinner";
 const RowContainer = ({ flag, data, scrollValue }) => {
   const rowContainer = useRef();
   const dispatch = useDispatch();
@@ -77,10 +78,7 @@ const RowContainer = ({ flag, data, scrollValue }) => {
         ))
       ) : (
         <div className="w-full flex flex-col items-center justify-center">
-          <img src={NotFound} className="h-340" />
-          <p className="text-xl text-headingColor font-semibold my-2">
-            Items Not Available
-          </p>
+         <Spinner/>
         </div>
       )}
     </div>

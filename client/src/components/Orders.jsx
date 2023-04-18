@@ -98,7 +98,7 @@ useEffect(() => {
             <div className="flex space-x-6 overflow-x-auto py-4 hideScrollBar">
               {order?.items?.map((item) => (
                 <img
-                  key={`item-img-${item?.Item_id}`}
+                  key={`item-img-${item?.Item_Item_id}`}
                   className="h-20 object-contain sm:h-32"
                   src={item?.Image}
                   alt=""
