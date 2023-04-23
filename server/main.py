@@ -6,7 +6,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import pickle
 import numpy as np
-import pandas as pd
+
 stripe.api_key = 'sk_test_51MWG4bSIlus8ySuKQKbDh3nGdHjtqaW5zylFXa1fy8Y3jp2L86JBuzBJJTAprVBedgd0Z5IXzBIgOEVfyQCljDGK00lgq89Mje'
 popular_df= pickle.load(open('server\popular.pkl','rb'))
 pt= pickle.load(open('server\pt.pkl','rb'))

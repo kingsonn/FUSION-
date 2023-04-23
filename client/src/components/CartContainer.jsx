@@ -42,7 +42,7 @@ const createCheckoutSession = async () => {
   try {
     const stripe = await stripePromise;
     console.log(items)
-    const checkoutSession = await axios.post("https://66e0-2401-4900-56db-fec0-583c-b15d-2f7c-4567.ngrok-free.app/create-checkout-session", {
+    const checkoutSession = await axios.post("https://mkmkm-cxj46yitqa-uc.a.run.app/create-checkout-session", {
       items: items,
       email: user.email,
       time: time,

@@ -22,7 +22,7 @@ const MainContainer = () => {
   let rec =[]
   useEffect(() => {}, [scrollValue, cartShow]);
   const fetchData = async () => {
-    const popular_df = await axios.post("https://66e0-2401-4900-56db-fec0-583c-b15d-2f7c-4567.ngrok-free.app/getpopular")
+    const popular_df = await axios.post("https://mkmkm-cxj46yitqa-uc.a.run.app/getpopular")
     for(let i=0; i< popular_df.data.length;i++){
       await getPopularFoodItems(popular_df.data[i]).then((data) => {
      items.push(data[0])
