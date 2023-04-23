@@ -1,7 +1,11 @@
 import React from "react";
 import Fade from "react-reveal/Fade";
 import circle from "../img/circle.svg"
+import { useStateValue } from "../context/StateProvider";
+
 const HomeContainer = () => {
+  const [{ user, cartShow, cartItems }, dispatch] = useStateValue();
+  // console.log(user.displayName.substring(0, user.displayName.indexOf(' ')))
   return (
     <section
       className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full "
@@ -20,9 +24,9 @@ const HomeContainer = () => {
         </Fade>
       </div>
 
-        <div  className="text-[2.5rem] lg:text-[4.5rem] font-bold tracking-wide text-headingColor">
+        <div  className="text-[2.15rem] lg:text-[4.5rem] font-bold tracking-wide text-headingColor">
           Are you 
-          <p>Hungry?</p>
+          <p>Hungry {user? user.displayName.substring(0, user.displayName.indexOf(' ')): ""}?</p>
           <p className="text-orange-600 text-[3rem] lg:text-[5rem]">
             Dont Wait!
           </p>
@@ -37,7 +41,7 @@ const HomeContainer = () => {
           type="button"
           className="bg-gradient-to-br from-orange-400 to-orange-500 w-full md:w-auto px-4 py-2  rounded-lg hover:shadow-lg transition-all ease-in-out duration-100"
         >
-          Order Now
+          {user? "Order Now": "Log in to order"}
         </button>
       </div>
     
