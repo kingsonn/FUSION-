@@ -29,7 +29,7 @@ const Rec = () => {
             setyolo(1)
         }
       
-    const popular_df = await axios.post("https://quickteen.azurewebsites.net/recommend",{
+    const popular_df = await axios.post("https://mkmkm-cxj46yitqa-uc.a.run.app/recommend",{
         yo: bang[0].items[0].Item_name
     })
     for(let i=0; i< popular_df.data.length;i++){

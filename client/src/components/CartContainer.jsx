@@ -42,7 +42,7 @@ const createCheckoutSession = async () => {
   try {
     const stripe = await stripePromise;
     console.log(items)
-    const checkoutSession = await axios.post("https://quickteen.azurewebsites.net/create-checkout-session", {
+    const checkoutSession = await axios.post("https://mkmkm-cxj46yitqa-uc.a.run.app/create-checkout-session", {
       items: items,
       email: user.email,
       time: time,
