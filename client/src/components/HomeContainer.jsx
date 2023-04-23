@@ -24,9 +24,9 @@ const HomeContainer = () => {
         </Fade>
       </div>
 
-        <div  className="text-[2.15rem] lg:text-[4.5rem] font-bold tracking-wide text-headingColor">
+        <div  className="text-[2rem] lg:text-[4.5rem] font-bold tracking-wide text-headingColor">
           Are you 
-          <p>Hungry {user? user.displayName.substring(0, user.displayName.indexOf(' ')): ""}?</p>
+          <p>hungry {user? <span className="text-orange-600">{user.displayName.substring(0, user.displayName.indexOf(' '))}</span>: ""}?</p>
           <p className="text-orange-600 text-[3rem] lg:text-[5rem]">
             Dont Wait!
           </p>

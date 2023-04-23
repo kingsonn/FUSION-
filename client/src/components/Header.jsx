@@ -153,13 +153,26 @@ const Header = () => {
         </Link>
 
         <div className="relative">
-          <motion.img
+          {user?(
+            <motion.img
             whileTap={{ scale: 0.6 }}
-            src={user ? user.photoURL : Avatar}
+            src={user.photoURL}
             className="w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl cursor-pointer rounded-full"
             alt="userprofile"
             onClick={login}
           />
+          ):(
+            <motion.div  whileTap={{ scale: 0.6 }} onClick={login}>
+            <img
+            whileTap={{ scale: 0.6 }}
+            src={Avatar}
+            className="w-7 min-w-[30px] h-7 ml-2.5 min-h-[30px] drop-shadow-xl cursor-pointer rounded-full"
+            alt="userprofile"
+          
+          />
+          <p>Log In</p>
+          </motion.div>
+          )}
           {isMenu && (
             <motion.div
               initial={{ opacity: 0, scale: 0.6 }}
