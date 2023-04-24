@@ -6,6 +6,8 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import pickle
 import numpy as np
+import cv2
+from keras.models import load_model
 
 stripe.api_key = 'sk_test_51MWG4bSIlus8ySuKQKbDh3nGdHjtqaW5zylFXa1fy8Y3jp2L86JBuzBJJTAprVBedgd0Z5IXzBIgOEVfyQCljDGK00lgq89Mje'
 popular_df= pickle.load(open('server\popular.pkl','rb'))
@@ -149,6 +151,56 @@ def get_recommendations():
     print(data)
     return list(np.unique(list(np.unique(hybrid(data)))+list(recommend1(data))))
 
+
+@app.route('/after', methods=['GET', 'POST'])
+def after():
+    img = request.files['file1']
+
+    img.save('static/file.jpg')
+
+    ####################################
+    img1 = cv2.imread('static/file.jpg')
+    gray = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+    cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt2.xml')
+    faces = cascade.detectMultiScale(gray, 1.1, 3)
+
+    for x,y,w,h in faces:
+        cv2.rectangle(img1, (x,y), (x+w, y+h), (0,255,0), 2)
+
+        cropped = img1[y:y+h, x:x+w]
+
+    cv2.imwrite('static/after.jpg', img1)
+
+    try:
+        cv2.imwrite('static/cropped.jpg', cropped)
+
+    except:
+        pass
+
+    #####################################
+
+    try:
+        image = cv2.imread('static/cropped.jpg', 0)
+    except:
+        image = cv2.imread('static/file.jpg', 0)
+
+    image = cv2.resize(image, (48,48))
+
+    image = image/255.0
+
+    image = np.reshape(image, (1,48,48,1))
+
+    model = load_model('model_3.h5')
+
+    prediction = model.predict(image)
+
+    label_map =   ['Anger','Neutral' , 'Fear', 'Happy', 'Sad', 'Surprise']
+
+    prediction = np.argmax(prediction)
+
+    final_prediction = label_map[prediction]
+
+    return final_prediction
 
 if __name__ == '__main__':
     app.run(port=4242)
