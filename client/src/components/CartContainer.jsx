@@ -32,13 +32,16 @@ const CartContainer = () => {
 
 const createCheckoutSession = async () => {
   setDisabled(true);
-  const today= new Date()
-  const currentTime= today.getHours() + ':' + parseInt(today.getMinutes() +10)
-  const startTime = "08:00";
-  const endTime = "17:00";
-  console.log(time==""||(currentTime<time && time>=startTime && time<=endTime))
+  // const today= new Date()
+  // const currentTime= today.getHours() + ':' + parseInt(today.getMinutes() +10)
+  // const startTime = "08:00";
+  // const endTime = "17:00";
+  // console.log(time==""||(currentTime<time && time>=startTime && time<=endTime))
+  // console.log(currentTime)
+  // console.log(time)
+  // console.log(time>currentTime)
   const a= 1
-  if(time==""||(currentTime<time && time>=startTime && time<=endTime)){
+  if(time==""|| time){
   try {
     const stripe = await stripePromise;
     console.log(items)
